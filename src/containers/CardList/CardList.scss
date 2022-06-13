@@ -2,4 +2,9 @@
     border: solid yellow 2px;
     width: 95%;
     height: 80%;
+    display: flex;
+    justify-content: center;
+    grid-gap: 1rem;
+    margin: auto;
+    flex-wrap: wrap;
 }

@@ -2,10 +2,13 @@ import React from 'react';
 import './CardList.scss';
 
 import Card from '../../components/Card/Card';
-const CardList = () => {
+const CardList = (props) => {
+
+const {searchedBeers} = props
+
   return (
     <div className='card-list'>
-        <Card/>
+        <Card beersArr={searchedBeers}/>
     </div>
   );
 };

@@ -1,12 +1,22 @@
-import React from 'react'
-import "./Card.scss"
+import React from 'react';
+import './Card.scss';
 
-const Card = () => {
-  return (
-    <div className='card'>
-      Card
-      </div>
-  )
-}
+const Card = ({beersArr}) => {
+  console.log(beersArr);
 
-export default Card
+  const beerJSX = beersArr.map((beer, index) => {
+    index = beersArr.indexOf(beer)
+    return (
+      <div key={index} className="card">
+        <img className='card__img' src={beer.image_url} alt="" />
+        <h2>{beer.name}</h2>
+        <span>{beer.tagline}</span>
+
+        </div>
+    );
+  });
+
+  return beerJSX
+};
+
+export default Card;
