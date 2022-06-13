@@ -4,14 +4,16 @@ import "./Form.scss"
 import RadioButton from '../RadioButton/RadioButton'
 import SearchBar from '../SearchBar/SearchBar'
 
+import { Link } from 'react-router-dom';
+
 const Form = (props) => {
     const {searchTerm, handleInput, handleRadio} = props
   return (
-    <form action="">
+    <form>
         <SearchBar searchTerm={searchTerm} handleInput={handleInput}/>
-        <RadioButton name={"Classic"} />
-        <RadioButton name={"Acidic (ph < 4)"}/>
-        <RadioButton name={"High ABV (> 6.0%)"}/>
+        <RadioButton handleRadio={handleRadio} name={"Classic"} />
+        <RadioButton handleRadio={handleRadio} name={"Acidic (ph < 4)"}/>
+        <RadioButton handleRadio={handleRadio} name={"High ABV (> 6.0%)"}/>
     </form>
   )
 }

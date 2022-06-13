@@ -2,7 +2,6 @@ import React from 'react';
 import './Card.scss';
 
 const Card = ({beersArr}) => {
-  console.log(beersArr);
 
   const beerJSX = beersArr.map((beer, index) => {
     index = beersArr.indexOf(beer)

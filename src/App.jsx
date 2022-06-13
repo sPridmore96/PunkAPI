@@ -5,8 +5,6 @@ import Main from './containers/Main/Main';
 
 import beersArr from './data/beer';
 
-// Filters need to be in app
-// functions passed to main -> ability to select need to be in nav
 
 function App() {
 

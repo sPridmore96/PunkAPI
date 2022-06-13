@@ -1,14 +1,16 @@
-import React from 'react'
-import "./RadioButton.scss"
+import React from 'react';
+import './RadioButton.scss';
+
+import { Link } from 'react-router-dom';
 
 const RadioButton = (props) => {
-    const {name, action} = props
+  const { name, handleRadio } = props;
   return (
-    <div>
-    <label htmlFor={name}>{name}</label>
-    <input name={name} action={action} type="radio" />
-    </div>
-  )
-}
+    <>
+      <label htmlFor={name}>{name}</label>
+      <input onChange={handleRadio} id={name} name="handleRadio" type="radio" />
+    </>
+  );
+};
 
-export default RadioButton
+export default RadioButton;

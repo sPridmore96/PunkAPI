@@ -4,11 +4,11 @@ import './CardList.scss';
 import Card from '../../components/Card/Card';
 const CardList = (props) => {
 
-const {searchedBeers} = props
+const {userSearch} = props
 
   return (
     <div className='card-list'>
-        <Card beersArr={searchedBeers}/>
+        <Card beersArr={userSearch}/>
     </div>
   );
 };

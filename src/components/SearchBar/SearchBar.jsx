@@ -3,12 +3,12 @@ import "./SearchBar.scss"
 
 const SearchBar = (props) => {
 
-    const {searchTerm, handleInput} = props
+    const {searchTerm, handleInput, handleClick} = props
 
   return (
 <div className='search-bar' >
     <label htmlFor="searchBar">Manual Search</label>
-    <input type="text" name="searchBar" value={searchTerm} onInput={handleInput}/>
+    <input type="text" name="searchBar" value={searchTerm} onClick={handleClick} onInput={handleInput}/>
 </div>
   )
 }
