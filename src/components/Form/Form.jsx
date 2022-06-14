@@ -1,19 +1,19 @@
 import React from 'react'
 import "./Form.scss"
 
-import RadioButton from '../RadioButton/RadioButton'
+import CheckBoxes from '../CheckBoxes/CheckBoxes'
 import SearchBar from '../SearchBar/SearchBar'
 
-import { Link } from 'react-router-dom';
+
 
 const Form = (props) => {
-    const {searchTerm, handleInput, handleRadio} = props
+    const {searchTerm, handleInput, handleCheckBox} = props
   return (
     <form>
         <SearchBar searchTerm={searchTerm} handleInput={handleInput}/>
-        <RadioButton handleRadio={handleRadio} name={"Classic"} />
-        <RadioButton handleRadio={handleRadio} name={"Acidic (ph < 4)"}/>
-        <RadioButton handleRadio={handleRadio} name={"High ABV (> 6.0%)"}/>
+        <CheckBoxes handleCheckBox={handleCheckBox} argument={"Classic"}/>
+        <CheckBoxes handleCheckBox={handleCheckBox} value={4} argument={"Acidic (ph < 4)"}/>
+        <CheckBoxes handleCheckBox={handleCheckBox} value={6} argument={"High ABV (> 6.0%)"}/>
     </form>
   )
 }

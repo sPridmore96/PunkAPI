@@ -1,19 +1,20 @@
-import React from 'react'
-import "./NavBar.scss"
-import RadioButton from '../../components/RadioButton/RadioButton'
-import SearchBar from '../../components/SearchBar/SearchBar'
-import Form from '../../components/Form/Form'
+import React from 'react';
+import './NavBar.scss';
+import Form from '../../components/Form/Form';
 
 const NavBar = (props) => {
-
-    const {searchTerm, handleInput, handleRadio} = props
+  const { searchTerm, handleInput, handleCheckBox } = props;
 
   return (
-    <div className='nav'>
-        <h2>Explore?</h2>
-        <Form handleRadio={handleRadio} searchTerm={searchTerm} handleInput={handleInput} />
+    <div className="nav">
+      <h2>Explore?</h2>
+      <Form
+        handleCheckBox={handleCheckBox}
+        searchTerm={searchTerm}
+        handleInput={handleInput}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
