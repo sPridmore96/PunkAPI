@@ -3,7 +3,7 @@ import './NavBar.scss';
 import Form from '../../components/Form/Form';
 
 const NavBar = (props) => {
-  const { searchTerm, handleInput, handleCheckBox } = props;
+  const { searchTerm, handleInput, handleCheckBox,  } = props;
 
   return (
     <div className="nav">
