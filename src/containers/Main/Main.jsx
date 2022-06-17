@@ -10,80 +10,77 @@ const Main = () => {
   const [beerInfo, setBeerInfo] = useState([]);
   const [dataCopy, setDataCopy] = useState();
   const [urlTag, setUrlTag] = useState();
-  const [options, setOptions] = useState([])
-  const [isAcidic ,setIsAcidic] = useState()
+  const [options, setOptions] = useState([]);
+  const [isAcidic, setIsAcidic] = useState();
+  const [urlState, setUrlState] = useState(`https://api.punkapi.com/v2/beers`);
+
+
+  
+  
 
   useEffect(() => {
-
-    
-    const getBeerInfo = async (numberOfBeer, search) => {
-      let url = `https://api.punkapi.com/v2/beers?per_page=${numberOfBeer}`;
-
-      console.log(urlTag);
-
-      if (search) {
-        url += `&beer_name=${search}`;
-      }
-
-      if (urlTag) {
-        url += `${urlTag}`;
-      }
-
-      const result = await fetch(url);
-      const data = await result.json();
+    const getBeerInfo = async () => {
+      let url = urlState
+      console.log(url);
+      const res = await fetch(url);
+      const data = await res.json();
       setBeerInfo(data);
-      setDataCopy(data);
-    };
-    getBeerInfo(amountShown, searchTerm);
-  }, [amountShown, searchTerm, urlTag]);
+    }
+
+    getBeerInfo();
+  }, [urlState]);
 
   const handleInput = (event) => {
     const cleanInput = event.target.value.toLowerCase();
-    return setSearchTerm(cleanInput);
+     setSearchTerm(cleanInput);
   };
-  // const [options, setOptions] = useState([])
-  const selectedID = []
-  const handleCheckBox = (event) => {
-    const checked = event.target.checked;
-    const id = event.target.id;
- 
-    selectedID.push(id)
-    console.log(selectedID);
 
-    if (checked) {
-      switch (id) {
-        case 'Acidic (ph < 4)':
-          setIsAcidic(checked)
-          const lowPH = beerInfo.filter((beer) => beer.ph < 4);
-          setBeerInfo(lowPH);
-          break;
-        case 'High ABV (> 6.0%)':
-          setUrlTag(`&abv_gt=6`);
-          break;
-        case "Classic":
-          setUrlTag(`&brewed_before=01-2010`);
-          break
-        default:
-          setUrlTag()
-          break;
-      }
-      if(id === 'Acidic (ph < 4)') {
-        
-      }
-    } else {
-      setUrlTag()
-      setBeerInfo(dataCopy)
-    }
+// const [options, setOptions] = useState([])
+  const handleOptionsFilter = () => {
+    
+
 
   }
+  
 
+  // const handleCheckBox = (event) => {
+  //   const checked = event.target.checked;
+  //   const id = event.target.id;
+
+  //   selectedID.push(id);
+  //   console.log(selectedID);
+
+  //   if (checked) {
+  //     switch (id) {
+  //       case 'Acidic (ph < 4)':
+  //         setIsAcidic(checked);
+  //         const lowPH = beerInfo.filter((beer) => beer.ph < 4);
+  //         setBeerInfo(lowPH);
+  //         break;
+  //       case 'High ABV (> 6.0%)':
+  //         setUrlTag(`&abv_gt=6`);
+  //         break;
+  //       case 'Classic':
+  //         setUrlTag(`&brewed_before=01-2010`);
+  //         break;
+  //       default:
+  //         setUrlTag();
+  //         break;
+  //     }
+  //     if (id === 'Acidic (ph < 4)') {
+  //     }
+  //   } else {
+  //     setUrlTag();
+  //     setBeerInfo(dataCopy);
+  //   }
+  // };
 
   return (
     <div className="main">
       <h2 className="main__header">Punk API</h2>
       <div className="main__content">
         <NavBar
-          handleCheckBox={handleCheckBox}
+          // handleCheckBox={handleCheckBox}
           searchTerm={searchTerm}
           handleInput={handleInput}
         />
