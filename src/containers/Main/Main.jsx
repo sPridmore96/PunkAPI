@@ -14,6 +14,8 @@ const Main = () => {
   const [isAcidic ,setIsAcidic] = useState()
 
   useEffect(() => {
+
+    
     const getBeerInfo = async (numberOfBeer, search) => {
       let url = `https://api.punkapi.com/v2/beers?per_page=${numberOfBeer}`;
 
