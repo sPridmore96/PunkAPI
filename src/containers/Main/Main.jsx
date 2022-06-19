@@ -136,7 +136,7 @@ const Main = () => {
               handleInput={handleInput}
             />
             <CardList beerInfo={beerInfo} />
-            <CardMoreInfo beerInfo={beerInfo} />
+            {/* <CardMoreInfo beerInfo={beerInfo} /> */}
           </div>
         </div>
 
