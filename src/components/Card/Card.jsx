@@ -10,8 +10,8 @@ const Card = ({beersArr}) => {
         <img className='card__img' src={beer.image_url} alt="" />
         <h2>{beer.name}</h2>
         <span>{beer.tagline}</span>
-        <p>{beer.abv}</p>
-        <span>{beer.ph}</span>
+        <p>abv :{beer.abv}</p>
+        <span>ph :{beer.ph}</span>
         </div>
     );
   });

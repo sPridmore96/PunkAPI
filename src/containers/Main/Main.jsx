@@ -3,6 +3,9 @@ import './Main.scss';
 
 import CardList from '../CardList/CardList';
 import NavBar from '../NavBar/NavBar';
+import CardMoreInfo from '../../components/CardMoreInfo/CardMoreInfo';
+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const Main = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -22,32 +25,61 @@ const Main = () => {
       const res = await fetch(url);
       const data = await res.json();
       setBeerInfo(data);
-console.log(`UseEffect Used`);
+      console.log(`UseEffect Used`);
     };
+
     getBeerInfo();
+    // handleSearchFilter();
+  }, [searchTerm, urlState, options]);
 
-  }, [urlState, options]);
+  // const [options, setOptions] = useState([])
 
-        // const [options, setOptions] = useState([])
+  const handleFiltersToUse = () => {
+    const optionsCopy = [...options];
+    optionsCopy.forEach((option) => {
+      console.log(option.id);
+      let url = urlState;
 
-        const handleOptionsFilter = () => {
-          let url = urlState
-          if (searchTerm) {
-            console.log(url);
-            setUrlTag(searchTerm);
-            console.log(urlTag);
-            // url += `beer_name=${urlTag}`
-          }
-          url += `beer_name=`
+      switch (option.id) {
+        case 'Acidic (ph < 4)':
+          setIsAcidic(checked);
+          const lowPH = beerInfo.filter((beer) => beer.ph < 4);
+          setBeerInfo(lowPH);
+          console.log(url);
+          break;
+        case 'High ABV (> 6.0%)':
+          setUrlTag(`&abv_gt=6`);
+          url += `${urlTag}`;
           setUrlState(url);
-        };
-
+          console.log(url);
+          break;
+        case 'Classic':
+          setUrlTag(`&brewed_before=01-2010`);
+          url += `${urlTag}`;
+          setUrlState(url);
+          console.log(url);
+          break;
+        default:
+          setUrlTag();
+          break;
+      }
+    });
+  };
+  handleFiltersToUse();
+  const handleSearchFilter = () => {
+    if (searchTerm) {
+      // let url = urlState
+      // url += `beer_name=${searchTerm}`;
+      // setUrlState(url)
+      setUrlState(`https://api.punkapi.com/v2/beers?beer_name=${searchTerm}`);
+    } else if (!searchTerm) {
+      setUrlState(`https://api.punkapi.com/v2/beers?`);
+    }
+  };
 
   const handleInput = (event) => {
     const cleanInput = event.target.value.toLowerCase();
     setSearchTerm(cleanInput);
-    console.log(searchTerm);
-    handleOptionsFilter()
   };
 
   const handleCheckBox = (event) => {
@@ -94,17 +126,20 @@ console.log(`UseEffect Used`);
   };
 
   return (
-    <div className="main">
-      <h2 className="main__header">Punk API</h2>
-      <div className="main__content">
-        <NavBar
-          handleCheckBox={handleCheckBox}
-          searchTerm={searchTerm}
-          handleInput={handleInput}
-        />
-        <CardList beerInfo={beerInfo} />
-      </div>
-    </div>
+
+        <div className="main">
+          <h2 className="main__header">Punk API</h2>
+          <div className="main__content">
+            <NavBar
+              handleCheckBox={handleCheckBox}
+              searchTerm={searchTerm}
+              handleInput={handleInput}
+            />
+            <CardList beerInfo={beerInfo} />
+            <CardMoreInfo beerInfo={beerInfo} />
+          </div>
+        </div>
+
   );
 };
 
