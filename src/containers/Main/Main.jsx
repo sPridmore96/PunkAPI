@@ -12,55 +12,58 @@ const Main = () => {
   const [urlTag, setUrlTag] = useState();
   const [options, setOptions] = useState([]);
   const [isAcidic, setIsAcidic] = useState();
-  const [checked, setChecked] = useState(false)
-  const [urlState, setUrlState] = useState(`https://api.punkapi.com/v2/beers`);
-  const [id, setId] = useState()
-
-
-  
-  
+  const [checked, setChecked] = useState(false);
+  const [urlState, setUrlState] = useState(`https://api.punkapi.com/v2/beers?`);
+  const [id, setId] = useState();
 
   useEffect(() => {
     const getBeerInfo = async () => {
-      let url = urlState
-      console.log(url);
+      let url = urlState;
       const res = await fetch(url);
       const data = await res.json();
       setBeerInfo(data);
-    }
-
+console.log(`UseEffect Used`);
+    };
     getBeerInfo();
-  }, [urlState, searchTerm]);
+
+  }, [urlState, options]);
+
+        // const [options, setOptions] = useState([])
+
+        const handleOptionsFilter = () => {
+          let url = urlState
+          if (searchTerm) {
+            console.log(url);
+            setUrlTag(searchTerm);
+            console.log(urlTag);
+            // url += `beer_name=${urlTag}`
+          }
+          url += `beer_name=${urlTag}`
+          setUrlState(url);
+        };
+
 
   const handleInput = (event) => {
     const cleanInput = event.target.value.toLowerCase();
-     setSearchTerm(cleanInput);
+    setSearchTerm(cleanInput);
+    console.log(searchTerm);
+    handleOptionsFilter()
   };
 
-// const [options, setOptions] = useState([])
-  const handleOptionsFilter = () => {
-    if (searchTerm){
-      console.log(searchTerm);
-    }
-  }
-console.log(options);
   const handleCheckBox = (event) => {
     const ticked = event.target.checked;
-    setId(event.target.id)
-    const obj = event.target
+    setId(event.target.id);
+    const obj = event.target;
     if (ticked) {
-      const copy = [...options]
-      copy.push(obj)
-      setOptions(copy)
+      const copy = [...options];
+      copy.push(obj);
+      setOptions(copy);
     } else {
-      const copy = [...options]
-      const index = copy.indexOf(obj)
-      copy.splice(index, 1)
-      setOptions(copy)
+      const copy = [...options];
+      const index = copy.indexOf(obj);
+      copy.splice(index, 1);
+      setOptions(copy);
     }
-  
-
-
 
     // selectedID.push(id);
     // console.log(selectedID);
