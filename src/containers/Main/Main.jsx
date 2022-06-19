@@ -9,13 +9,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const Main = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [amountShown, setAmountShown] = useState(80);
+  // const [amountShown, setAmountShown] = useState(80);
   const [beerInfo, setBeerInfo] = useState([]);
-  const [dataCopy, setDataCopy] = useState();
-  const [urlTag, setUrlTag] = useState();
+  // const [dataCopy, setDataCopy] = useState();
+  // const [urlTag, setUrlTag] = useState();
   const [options, setOptions] = useState([]);
-  const [isAcidic, setIsAcidic] = useState();
-  const [checked, setChecked] = useState(false);
+  // const [isAcidic, setIsAcidic] = useState();
+  // const [checked, setChecked] = useState(false);
   const [urlState, setUrlState] = useState(`https://api.punkapi.com/v2/beers?`);
   const [id, setId] = useState();
 
