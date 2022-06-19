@@ -40,29 +40,6 @@ const Main = () => {
       console.log(option.id);
       let url = urlState;
 
-      switch (option.id) {
-        case 'Acidic (ph < 4)':
-          setIsAcidic(checked);
-          const lowPH = beerInfo.filter((beer) => beer.ph < 4);
-          setBeerInfo(lowPH);
-          console.log(url);
-          break;
-        case 'High ABV (> 6.0%)':
-          setUrlTag(`&abv_gt=6`);
-          url += `${urlTag}`;
-          setUrlState(url);
-          console.log(url);
-          break;
-        case 'Classic':
-          setUrlTag(`&brewed_before=01-2010`);
-          url += `${urlTag}`;
-          setUrlState(url);
-          console.log(url);
-          break;
-        default:
-          setUrlTag();
-          break;
-      }
     });
   };
   handleFiltersToUse();
