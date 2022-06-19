@@ -38,7 +38,7 @@ console.log(`UseEffect Used`);
             console.log(urlTag);
             // url += `beer_name=${urlTag}`
           }
-          url += `beer_name=${urlTag}`
+          url += `beer_name=`
           setUrlState(url);
         };
 
