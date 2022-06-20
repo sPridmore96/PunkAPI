@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/spridmore96/punk-api/static/css/main.e5c46932.css",
+    "main.js": "/spridmore96/punk-api/static/js/main.10a0ccb2.js",
+    "static/js/787.056e15b9.chunk.js": "/spridmore96/punk-api/static/js/787.056e15b9.chunk.js",
+    "index.html": "/spridmore96/punk-api/index.html",
+    "main.e5c46932.css.map": "/spridmore96/punk-api/static/css/main.e5c46932.css.map",
+    "main.10a0ccb2.js.map": "/spridmore96/punk-api/static/js/main.10a0ccb2.js.map",
+    "787.056e15b9.chunk.js.map": "/spridmore96/punk-api/static/js/787.056e15b9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e5c46932.css",
+    "static/js/main.10a0ccb2.js"
+  ]
+}
