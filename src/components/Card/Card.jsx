@@ -11,7 +11,6 @@ const Card = ({ beersArr, showNoBeers }) => {
         <span>{beer.tagline}</span>
         <p>abv :{beer.abv}</p>
         <span>ph :{beer.ph}</span>
-        <p>{beer.first_brewed}</p>
       </div>
     );
   });
@@ -22,7 +21,8 @@ const Card = ({ beersArr, showNoBeers }) => {
       <p>
         There are no beers that fit this
         <br />
-        criteria
+        criteria <br />
+        on this page!
       </p>
     </div>
   );

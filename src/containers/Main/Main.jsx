@@ -14,7 +14,7 @@ const Main = () => {
   );
   const [showNoBeers, setShowNoBeers] = useState(true)
 
-  const acidicBeerData = [];
+
 
   useEffect(() => {
     getBeerInfo();
@@ -59,13 +59,13 @@ const Main = () => {
 
     if (classic && !highAbv && !acidic) {
       setUrlState('https://api.punkapi.com/v2/beers?page=1&&brewed_before=01-2010');
-      console.log(1);
+      
     }
     
     
     else if (highAbv && !classic && !acidic) {
       setUrlState('https://api.punkapi.com/v2/beers?page=1&&abv_gt=6');
-      console.log(2);
+      
     } 
     
     
@@ -75,35 +75,45 @@ const Main = () => {
         return beer.ph < 4;
       });
       setBeerInfo(newArrAcidic);
-      console.log(3);
+      
     } 
     
     
     else if (classic && highAbv && !acidic) {
       setUrlState(
         'https://api.punkapi.com/v2/beers?page=1&&brewed_before=01-2010&abv_gt=6'
-      ); console.log(4);
+      ); 
     } 
     
     
+    else if(classic && !highAbv && acidic) {
+      
+      setShowNoBeers(false)
+      setUrlState('');
+      return (<p>no beers</p>)
+    }
+    
+  
+    
     else if (classic && highAbv && acidic) {
-      console.log(5);
-      const newArr = [...acidicBeers];
-      newArr.filter((beer) => {
-        return beer.ph < 4 && beer.abv > 6 && beer.first_brewed;
-      });
+      
+      setShowNoBeers(false)
+      setUrlState('');
+      return (<p>no beers</p>)
     } 
     
     
     else if (!classic && highAbv && acidic) {
-      console.log(6);
+      
       setShowNoBeers(false)
       setUrlState('');
       return (<p>no beers</p>)
     } 
     
     else {
-      setUrlState('https://api.punkapi.com/v2/beers?page=1&&per_page=80&');
+      console.log(1);
+      getBeerInfo()
+      setUrlState(`https://api.punkapi.com/v2/beers?page=1&`)
     }
   };
 
@@ -114,7 +124,6 @@ const Main = () => {
       setUrlState(`https://api.punkapi.com/v2/beers?page=1&`);
     }
   };
-  console.log(beerInfo);
   const handleInput = (event) => {
     const cleanInput = event.target.value.toLowerCase();
     setSearchTerm(cleanInput);
@@ -131,13 +140,14 @@ const Main = () => {
       setOptions(optionsDuplicate);
     } else {
       setShowNoBeers(true)
+      getBeerInfo()
       optionsDuplicate.splice(index, 1);
       setOptions(optionsDuplicate);
     }
     setOptions(optionsDuplicate);
     handleFiltersToUse(optionsDuplicate);
   };
-  console.log(options);
+
 
   return (
     <div className="main">
