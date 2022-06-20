@@ -29,7 +29,6 @@ const Main = () => {
     };
 
     getBeerInfo();
-    // handleSearchFilter();
   }, [searchTerm, urlState, options]);
 
   // const [options, setOptions] = useState([])
@@ -42,8 +41,10 @@ const Main = () => {
 
     });
   };
-  handleFiltersToUse();
-  const handleSearchFilter = () => {
+  
+
+
+  const handleSearchFilter = (searchTerm) => {
     if (searchTerm) {
       // let url = urlState
       // url += `beer_name=${searchTerm}`;
@@ -57,12 +58,17 @@ const Main = () => {
   const handleInput = (event) => {
     const cleanInput = event.target.value.toLowerCase();
     setSearchTerm(cleanInput);
+    handleSearchFilter(searchTerm)
   };
-
+console.log(options);
   const handleCheckBox = (event) => {
     const ticked = event.target.checked;
+
     setId(event.target.id);
-    const obj = event.target;
+
+    const obj = event.target.id;
+    console.log(obj);
+
     if (ticked) {
       const copy = [...options];
       copy.push(obj);
