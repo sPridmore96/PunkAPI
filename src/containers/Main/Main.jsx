@@ -1,82 +1,143 @@
 import React, { useEffect, useState } from 'react';
 import './Main.scss';
-
 import CardList from '../CardList/CardList';
 import NavBar from '../NavBar/NavBar';
 
 const Main = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [amountShown, setAmountShown] = useState(80);
   const [beerInfo, setBeerInfo] = useState([]);
-  const [dataCopy, setDataCopy] = useState();
-  const [urlTag, setUrlTag] = useState();
-  const [options, setOptions] = useState([])
-  const [isAcidic ,setIsAcidic] = useState()
+  const [acidicBeers, setAcidicBeers] = useState([]);
+  const [options, setOptions] = useState([]);
+  const [beersOptionsData, setBeerOptionsData] = useState([]);
+  const [urlState, setUrlState] = useState(
+    `https://api.punkapi.com/v2/beers?page=1&per_page=80&`
+  );
+  const [showNoBeers, setShowNoBeers] = useState(true)
+
+  const acidicBeerData = [];
 
   useEffect(() => {
+    getBeerInfo();
+  }, [searchTerm, urlState, beersOptionsData]);
 
-    
-    const getBeerInfo = async (numberOfBeer, search) => {
-      let url = `https://api.punkapi.com/v2/beers?per_page=${numberOfBeer}`;
+  useEffect(() => {
+    getAcidicBeers();
+  }, []);
 
-      console.log(urlTag);
-
-      if (search) {
-        url += `&beer_name=${search}`;
-      }
-
-      if (urlTag) {
-        url += `${urlTag}`;
-      }
-
-      const result = await fetch(url);
-      const data = await result.json();
-      setBeerInfo(data);
-      setDataCopy(data);
-    };
-    getBeerInfo(amountShown, searchTerm);
-  }, [amountShown, searchTerm, urlTag]);
-
-  const handleInput = (event) => {
-    const cleanInput = event.target.value.toLowerCase();
-    return setSearchTerm(cleanInput);
+  const getAcidicBeers = async () => {
+    const res = await fetch(
+      'https://api.punkapi.com/v2/beers?page=1&per_page=80&'
+    );
+    const data = await res.json();
+    setAcidicBeers(data);
   };
-  // const [options, setOptions] = useState([])
-  const selectedID = []
-  const handleCheckBox = (event) => {
-    const checked = event.target.checked;
-    const id = event.target.id;
- 
-    selectedID.push(id)
-    console.log(selectedID);
 
-    if (checked) {
-      switch (id) {
-        case 'Acidic (ph < 4)':
-          setIsAcidic(checked)
-          const lowPH = beerInfo.filter((beer) => beer.ph < 4);
-          setBeerInfo(lowPH);
-          break;
-        case 'High ABV (> 6.0%)':
-          setUrlTag(`&abv_gt=6`);
-          break;
-        case "Classic":
-          setUrlTag(`&brewed_before=01-2010`);
-          break
-        default:
-          setUrlTag()
-          break;
+  const getBeerInfo = async () => {
+    const res = await fetch(urlState);
+    const data = await res.json();
+    setBeerInfo(data);
+
+  };
+
+  const handleFiltersToUse = (options) => {
+    let classic = false;
+    let highAbv = false;
+    let acidic = false;
+
+    for (let i = 0; i < options.length; i++) {
+      if (options[i] === 'Classic') {
+        classic = true;
+      }     
+      else if (options[i] === 'High ABV (> 6.0%)') {
+        highAbv = true;
+      } 
+      else if (options[i] === 'Acidic (ph < 4)') {
+        acidic = true;
       }
-      if(id === 'Acidic (ph < 4)') {
-        
-      }
-    } else {
-      setUrlTag()
-      setBeerInfo(dataCopy)
     }
 
-  }
 
+    if (classic && !highAbv && !acidic) {
+      setUrlState('https://api.punkapi.com/v2/beers?page=1&&brewed_before=01-2010');
+      console.log(1);
+    }
+    
+    
+    else if (highAbv && !classic && !acidic) {
+      setUrlState('https://api.punkapi.com/v2/beers?page=1&&abv_gt=6');
+      console.log(2);
+    } 
+    
+    
+    else if (acidic && !classic && !highAbv) {
+      const newArr = [...acidicBeers];
+      const newArrAcidic = newArr.filter((beer) => {
+        return beer.ph < 4;
+      });
+      setBeerInfo(newArrAcidic);
+      console.log(3);
+    } 
+    
+    
+    else if (classic && highAbv && !acidic) {
+      setUrlState(
+        'https://api.punkapi.com/v2/beers?page=1&&brewed_before=01-2010&abv_gt=6'
+      ); console.log(4);
+    } 
+    
+    
+    else if (classic && highAbv && acidic) {
+      console.log(5);
+      const newArr = [...acidicBeers];
+      newArr.filter((beer) => {
+        return beer.ph < 4 && beer.abv > 6 && beer.first_brewed;
+      });
+    } 
+    
+    
+    else if (!classic && highAbv && acidic) {
+      console.log(6);
+      setShowNoBeers(false)
+      setUrlState('');
+      return (<p>no beers</p>)
+    } 
+    
+    else {
+      setUrlState('https://api.punkapi.com/v2/beers?page=1&&per_page=80&');
+    }
+  };
+
+  const handleSearchFilter = (searchTerm) => {
+    if (searchTerm) {
+      setUrlState(`https://api.punkapi.com/v2/beers?page=1&beer_name=${searchTerm}`);
+    } else if (!searchTerm) {
+      setUrlState(`https://api.punkapi.com/v2/beers?page=1&`);
+    }
+  };
+  console.log(beerInfo);
+  const handleInput = (event) => {
+    const cleanInput = event.target.value.toLowerCase();
+    setSearchTerm(cleanInput);
+    handleSearchFilter(cleanInput);
+  };
+
+  const handleCheckBox = (event) => {
+    const id = event.target.id;
+    const optionsDuplicate = [...options];
+    let index = optionsDuplicate.indexOf(id);
+
+    if (index === -1) {
+      optionsDuplicate.push(id);
+      setOptions(optionsDuplicate);
+    } else {
+      setShowNoBeers(true)
+      optionsDuplicate.splice(index, 1);
+      setOptions(optionsDuplicate);
+    }
+    setOptions(optionsDuplicate);
+    handleFiltersToUse(optionsDuplicate);
+  };
+  console.log(options);
 
   return (
     <div className="main">
@@ -87,7 +148,8 @@ const Main = () => {
           searchTerm={searchTerm}
           handleInput={handleInput}
         />
-        <CardList beerInfo={beerInfo} />
+        <CardList showNoBeers={showNoBeers} beerInfo={beerInfo} />
+        {/* <CardMoreInfo beerInfo={beerInfo} /> */}
       </div>
     </div>
   );

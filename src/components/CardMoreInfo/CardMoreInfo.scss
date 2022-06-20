@@ -1,0 +1,18 @@
+.selectedBeer{
+
+
+
+    &__img {
+        width: 125px;
+        height: 325px;
+    }
+    &__ingredients-headings {
+        border: 2px black solid;
+        margin: 1rem auto;
+    }
+    &__ingredients-contents{
+        display: flex;
+        border: solid black 2px;
+        justify-content: space-evenly;
+    }
+}
